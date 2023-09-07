@@ -4,7 +4,7 @@ describe('Kindred API Automation - Question 01', ()=>{
 
     let kambiURL = "https://www.unibet.co.uk/kambi-rest-api/gameLauncher2.json?brand=unibet&locale=en_GB"
 
-    it('UNIBET', ()=>{
+    it('Validate the main url', ()=>{
         cy.request({
             method: 'GET',
             url: kambiURL,
@@ -17,7 +17,7 @@ describe('Kindred API Automation - Question 01', ()=>{
         })
     });
 
-    it('UNIBET-2', ()=>{
+    it('Validate response parameters', ()=>{
         cy.request({
             method: 'GET',
             url: kambiURL,
