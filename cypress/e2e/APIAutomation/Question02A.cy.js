@@ -4,7 +4,7 @@ describe('Kindred API Automation - Question 02 A', ()=>{
 
     let sportsBookurl = "https://www.unibet.co.uk/sportsbook-feeds/views/sports/a-z";
 
-    it('Verify the mail Unibet URL', ()=>{
+    it('Verify the main Unibet URL', ()=>{
         cy.request({
             method: 'GET',
             url: sportsBookurl,

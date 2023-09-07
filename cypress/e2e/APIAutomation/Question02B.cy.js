@@ -8,7 +8,7 @@ describe('Different URLs validations - Question 02 B', ()=>{
         'https://www.unibet.com/sportsbook-feeds/views/sports/a-z',
       ];
 
-    it('Verify the mail Unibet URL', ()=>{
+    it('Verify the main Unibet URL', ()=>{
 
         cy.wrap(urls).each((durls) =>{
             cy.request({
@@ -20,8 +20,7 @@ describe('Different URLs validations - Question 02 B', ()=>{
         })
     });
 
-    /**Using Fixtures for the different urls validations */
-    it('Execute tests for different urls by using fixtures', () =>{
+    it('Validate multiple domains', () =>{
         
             cy.fixture('unibetURLs.json').then((diffURLs) =>{
                 const urls = diffURLs.urls;
@@ -37,88 +36,75 @@ describe('Different URLs validations - Question 02 B', ()=>{
         })
     })
 
-    it('Validate name field', ()=>{
+    it('Validate name field for multiple domains', ()=>{
 
-        cy.wrap(urls).each((durls) =>{
-            cy.request({
-                method: 'GET',
-                url: durls,
-                Headers:{
-                    "Content-Type":"application/json"
-                }
-            }).then((res) =>{
-                const sportNames = res.body.layout.sections[1].widgets[0].sports.map((sport) => 
-                sport.name);
-    
-                const pattern = /^[A-Za-z0-9\s]+$/;
+        cy.fixture('unibetURLs.json').then((diffURLs) =>{
+            const urls = diffURLs.urls;
 
-                cy.wrap(sportNames).each((sportName) => {
-                    cy.wrap(sportName).should('match', pattern);
-                  });
-    
-                // cy.wrap(sportNames).each((sportName) => {
-                //     cy.wrap(sportName).should((name) => {
-                //       expect(name).to.match(pattern);
-                //     });
-                //   });
-    
-                // cy.wrap(sportNames).each((sportName) => {
-                //     // Validate each sport name using the regular expression pattern
-                //     expect(sportName).to.match(pattern);
-                //   });
-    
+            cy.wrap(urls).each((unibetURL) =>{
+                cy.request({
+                    method: 'GET',
+                    url: unibetURL,
+                }).then((res) =>{
+                    const sportNames = res.body.layout.sections[1].widgets[0].sports.map((sport) => 
+                    sport.name);
+        
+                    const pattern = /^[A-Za-z0-9\s]+$/;
+
+                    cy.wrap(sportNames).each((sportName) => {
+                        cy.wrap(sportName).should('match', pattern);
+                    });    
+                })
             })
         })
     })
 
-    it('boCount field validation', () =>{
+    it('Validate boCount field for multiple domains', () =>{
 
-        cy.wrap(urls).each((durls) =>{
-            cy.request({
-                method: 'GET',
-                url: durls,
-                Headers:{
-                    "Content-Type":"application/json"
-                }
-            }).then((boRes) =>{
-                const sportBoCount = boRes.body.layout.sections[1].widgets[0].sports.map((sport) => 
-                sport.boCount);
-    
-                // cy.wrap(sportBoCount).each((bCount) =>{
-                //     cy.wrap(bCount).should('be.gte', 0);
-                // })
-    
-                sportBoCount.forEach(val => {
-                    cy.wrap(val).should('be.gte', 0);
-                });
-                
+        cy.fixture('unibetURLs.json').then((diffURLs) =>{
+            const urls = diffURLs.urls;
+
+            cy.wrap(urls).each((unibetURL) =>{
+                cy.request({
+                    method: 'GET',
+                    url: unibetURL,
+                }).then((boRes) =>{
+                    const sportBoCount = boRes.body.layout.sections[1].widgets[0].sports.map((sport) => 
+                    sport.boCount);
+        
+                    sportBoCount.forEach(val => {
+                        cy.wrap(val).should('be.gte', 0);
+                    });
+                    
+                })
             })
         })
     });
 
-    it('IconURL validation', ()=>{
+    it('Validate IconURL field for multiple domains', ()=>{
 
-        cy.wrap(urls).each((durls) =>{
-            cy.request({
-                method: 'GET',
-                url: durls,
-                Headers:{
-                    "Content-Type":"application/json"
-                }
-            }).then((iconURLRes) =>{
-                const iconURL = iconURLRes.body.layout.sections[1].widgets[0].sports.map((sport) => 
-                sport.iconUrl);
-    
-                cy.wrap(iconURL).each((iurl) =>{
-                    cy.request({
-                        method: 'GET',
-                        url: iurl,
-                        failOnStatusCode: false,
-                    }).then((iconRes) =>{
-                        expect(iconRes.status).to.eq(200);
+        cy.fixture('unibetURLs.json').then((diffURLs) =>{
+            const urls = diffURLs.urls;
+
+            cy.wrap(urls).each((unibetURL) =>{
+                cy.request({
+                    method: 'GET',
+                    url: unibetURL,
+                }).then((iconURLRes) =>{
+                    const iconURL = iconURLRes.body.layout.sections[1].widgets[0].sports.map((sport) => 
+                    sport.iconUrl);
+        
+                    cy.wrap(iconURL).each((iurl) =>{
+                        cy.request({
+                            method: 'GET',
+                            url: iurl,
+                            failOnStatusCode: false,
+                        }).then((iconRes) =>{
+                            expect(iconRes.status).to.eq(200);
+                        })
                     })
-                })
-            })            
+                })            
+            })
         })
     })
 })
