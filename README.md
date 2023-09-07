@@ -9,8 +9,6 @@
 
 ## Description and File Structure
 
-    * Develped this famework based on the Page Object Model structure. 
-    * All object repositories mantain by the relavent pages.
     * Main test cases written on the 'e2e' folder.
     * Fixtures are use do the data driven test cases.
         
@@ -22,5 +20,5 @@ npx cypress open
  ```
     * Command line
  ```bash
-npx cypress run --spec "cypress/e2e/<file-name.cy.js>"
+npx cypress run --spec "cypress/e2e/APIAutomation/<file-name.cy.js>"
  ```
