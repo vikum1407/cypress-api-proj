@@ -1,0 +1,14 @@
+{
+  "name": "kindredcypress",
+  "version": "1.0.0",
+  "description": "kindred API automation framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vikum Sugathadasa",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "^13.1.0"
+  }
+}
